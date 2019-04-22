@@ -7,21 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46A97E7E135D2E39DC2F5233 /* Pods_SimpleGPX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3B290123199210B345CC5891 /* Pods_SimpleGPX.framework */; };
+		654CAFED226B2E8B00541127 /* GPXUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 654CAFEC226B2E8B00541127 /* GPXUtils.swift */; };
+		6598D6D7226CB41300CD1EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6598D6D6226CB41300CD1EE6 /* Assets.xcassets */; };
 		65C5DFA32266468900C3833D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C5DFA22266468900C3833D /* AppDelegate.swift */; };
 		65C5DFA52266468900C3833D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65C5DFA42266468900C3833D /* ViewController.swift */; };
 		65C5DFA82266468900C3833D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C5DFA62266468900C3833D /* Main.storyboard */; };
-		65C5DFAA2266468B00C3833D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65C5DFA92266468B00C3833D /* Assets.xcassets */; };
 		65C5DFAD2266468B00C3833D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C5DFAB2266468B00C3833D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ACB775CCEC61449DA5BDBDE /* Pods-SimpleGPX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleGPX.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleGPX/Pods-SimpleGPX.release.xcconfig"; sourceTree = "<group>"; };
+		3B290123199210B345CC5891 /* Pods_SimpleGPX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SimpleGPX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6525AF2D226B8039004D6088 /* SimpleGPX.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGPX.entitlements; sourceTree = "<group>"; };
+		654CAFEC226B2E8B00541127 /* GPXUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GPXUtils.swift; sourceTree = "<group>"; };
+		6598D6D6226CB41300CD1EE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65C5DF9F2266468900C3833D /* SimpleGPX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleGPX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C5DFA22266468900C3833D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		65C5DFA42266468900C3833D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		65C5DFA72266468900C3833D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		65C5DFA92266468B00C3833D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65C5DFAC2266468B00C3833D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		65C5DFAE2266468B00C3833D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DDE5813ED412CF44DA93ABFD /* Pods-SimpleGPX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleGPX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleGPX/Pods-SimpleGPX.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +36,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46A97E7E135D2E39DC2F5233 /* Pods_SimpleGPX.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2F9F95A96FA32187DC902437 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DDE5813ED412CF44DA93ABFD /* Pods-SimpleGPX.debug.xcconfig */,
+				0ACB775CCEC61449DA5BDBDE /* Pods-SimpleGPX.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		49C000E8649553EA69A5495B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3B290123199210B345CC5891 /* Pods_SimpleGPX.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		65C5DF962266468900C3833D = {
 			isa = PBXGroup;
 			children = (
 				65C5DFA12266468900C3833D /* SimpleGPX */,
 				65C5DFA02266468900C3833D /* Products */,
+				2F9F95A96FA32187DC902437 /* Pods */,
+				49C000E8649553EA69A5495B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,10 +81,12 @@
 		65C5DFA12266468900C3833D /* SimpleGPX */ = {
 			isa = PBXGroup;
 			children = (
+				6525AF2D226B8039004D6088 /* SimpleGPX.entitlements */,
 				65C5DFA22266468900C3833D /* AppDelegate.swift */,
 				65C5DFA42266468900C3833D /* ViewController.swift */,
+				6598D6D6226CB41300CD1EE6 /* Assets.xcassets */,
+				654CAFEC226B2E8B00541127 /* GPXUtils.swift */,
 				65C5DFA62266468900C3833D /* Main.storyboard */,
-				65C5DFA92266468B00C3833D /* Assets.xcassets */,
 				65C5DFAB2266468B00C3833D /* LaunchScreen.storyboard */,
 				65C5DFAE2266468B00C3833D /* Info.plist */,
 			);
@@ -71,9 +100,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65C5DFB12266468B00C3833D /* Build configuration list for PBXNativeTarget "SimpleGPX" */;
 			buildPhases = (
+				5B9DFCBF8E475478B614E10D /* [CP] Check Pods Manifest.lock */,
 				65C5DF9B2266468900C3833D /* Sources */,
 				65C5DF9C2266468900C3833D /* Frameworks */,
 				65C5DF9D2266468900C3833D /* Resources */,
+				8AB94030CDCAF770F4E2773A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -96,6 +127,14 @@
 				TargetAttributes = {
 					65C5DF9E2266468900C3833D = {
 						CreatedOnToolsVersion = 10.2;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -123,12 +162,59 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C5DFAD2266468B00C3833D /* LaunchScreen.storyboard in Resources */,
-				65C5DFAA2266468B00C3833D /* Assets.xcassets in Resources */,
+				6598D6D7226CB41300CD1EE6 /* Assets.xcassets in Resources */,
 				65C5DFA82266468900C3833D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5B9DFCBF8E475478B614E10D /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SimpleGPX-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8AB94030CDCAF770F4E2773A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SimpleGPX/Pods-SimpleGPX-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CoreGPX/CoreGPX.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CoreGPX.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleGPX/Pods-SimpleGPX-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		65C5DF9B2266468900C3833D /* Sources */ = {
@@ -136,6 +222,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				65C5DFA52266468900C3833D /* ViewController.swift in Sources */,
+				654CAFED226B2E8B00541127 /* GPXUtils.swift in Sources */,
 				65C5DFA32266468900C3833D /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,8 +367,10 @@
 		};
 		65C5DFB22266468B00C3833D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDE5813ED412CF44DA93ABFD /* Pods-SimpleGPX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGPX/SimpleGPX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8HUR635N2P;
 				INFOPLIST_FILE = SimpleGPX/Info.plist;
@@ -298,8 +387,10 @@
 		};
 		65C5DFB32266468B00C3833D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0ACB775CCEC61449DA5BDBDE /* Pods-SimpleGPX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGPX/SimpleGPX.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 8HUR635N2P;
 				INFOPLIST_FILE = SimpleGPX/Info.plist;

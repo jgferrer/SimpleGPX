@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -42,5 +43,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+        
+        let coordinateArray = GPXUtils.shared.getCoordinateArray(withURL: url.absoluteString)
+        let userInfo = [ "coordinateArray" : coordinateArray ]
+        NotificationCenter.default.post(name: .myNotificationKey, object: nil, userInfo: userInfo)
+        
+        return true
+    }
 }
-
