@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let coordinateArray = GPXUtils.shared.getCoordinateArray(withURL: url.absoluteString)
         let userInfo = [ "coordinateArray" : coordinateArray ]
-        NotificationCenter.default.post(name: .myNotificationKey, object: nil, userInfo: userInfo)
+        NotificationCenter.default.post(name: .openFromOutsideNotification, object: nil, userInfo: userInfo)
         
         return true
     }
