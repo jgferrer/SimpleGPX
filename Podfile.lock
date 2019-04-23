@@ -1,0 +1,16 @@
+PODS:
+  - CoreGPX (0.5.1)
+
+DEPENDENCIES:
+  - CoreGPX
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - CoreGPX
+
+SPEC CHECKSUMS:
+  CoreGPX: bad4d892a6fec4c3ead5b9f0d2bb4dc1a7a0ce4b
+
+PODFILE CHECKSUM: 9704f51c3bae87ca1c8a36ef747a3a1d472e3bf4
+
+COCOAPODS: 1.5.3
