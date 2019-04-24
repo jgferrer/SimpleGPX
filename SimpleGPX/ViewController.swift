@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import MobileCoreServices
 
 class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
 
@@ -195,7 +196,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     
     @objc func openGPXLocal() {
         // Para leer fichero local
-        let importMenu = UIDocumentPickerViewController(documentTypes: ["com.topografix.gpx"], in: .import)
+        let importMenu = UIDocumentPickerViewController(documentTypes: [String(kUTTypeData)], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
         self.present(importMenu, animated: true, completion: nil)
