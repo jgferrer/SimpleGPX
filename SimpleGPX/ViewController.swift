@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 import CoreLocation
-import MobileCoreServices
 
 class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
 
@@ -98,6 +97,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         followUserButton.setImage(UIImage(named: "follow_user"), for: .highlighted)
         followUserButton.addTarget(self, action: #selector(ViewController.followButtonTroggler), for: .touchUpInside)
         followUserButton.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin]
+        mapView.addSubview(followUserButton)
         
         // Folder button
         let folderW: CGFloat = kButtonSmallSize
@@ -113,8 +113,6 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         openGPXButton.layer.cornerRadius = folderW/2
         openGPXButton.autoresizingMask = [.flexibleLeftMargin, .flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin]
         mapView.addSubview(openGPXButton)
-        
-        mapView.addSubview(followUserButton)
         
         // Gestos
         // Desactivar "Seguir al usuario" cuando movamos el mapa o hagamos zoom
@@ -158,7 +156,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         let renderer = MKPolylineRenderer(overlay: overlay)
         renderer.strokeColor = UIColor.red
-        renderer.lineWidth = 4.0
+        renderer.lineWidth = 2.0
         
         return renderer
     }
@@ -197,7 +195,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     
     @objc func openGPXLocal() {
         // Para leer fichero local
-        let importMenu = UIDocumentPickerViewController(documentTypes: [String(kUTTypeData)], in: .import)
+        let importMenu = UIDocumentPickerViewController(documentTypes: ["com.topografix.gpx"], in: .import)
         importMenu.delegate = self
         importMenu.modalPresentationStyle = .formSheet
         self.present(importMenu, animated: true, completion: nil)
