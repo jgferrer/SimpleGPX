@@ -16,6 +16,8 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     @IBOutlet weak var mapView: MKMapView!
     var coordinateArray = [CLLocationCoordinate2D]()
     var locationManager: CLLocationManager!
+    var headingImageView: UIImageView?
+    var userHeading: CLLocationDirection?
     
     let kButtonSmallSize: CGFloat = 60.0
     let kButtonLargeSize: CGFloat = 100.0
@@ -29,6 +31,30 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
                 
             } else {
                 followUserButton.setImage(UIImage(named: "follow_user_disabled"), for: UIControl.State())
+            }
+        }
+    }
+    
+    enum GpxTrackingStatus {
+        case stoped
+        case recording
+        case paused
+    }
+    var gpxTrackingStatus: GpxTrackingStatus = GpxTrackingStatus.stoped {
+        didSet {
+            switch gpxTrackingStatus {
+            case .stoped:
+                print("stoped")
+                trackerButton.setImage(UIImage(named: "record"), for: UIControl.State())
+                trackerButton.blink(enabled: false)
+            case.recording:
+                print("recording")
+                trackerButton.setImage(UIImage(named: "pause"), for: UIControl.State())
+                trackerButton.blink(enabled:false)
+            case .paused:
+                print ("paused")
+                trackerButton.setImage(UIImage(named: "pause"), for: UIControl.State())
+                trackerButton.blink()
             }
         }
     }
@@ -145,7 +171,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         var routeLine: MKPolyline
         routeLine = MKPolyline(coordinates: self.coordinateArray, count: self.coordinateArray.count)
         self.mapView.addOverlay(routeLine)
-        self.mapView.setCenter(self.coordinateArray[self.coordinateArray.count/2], animated: true)
+        self.mapView.layoutMargins = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         self.mapView.setVisibleMapRect(routeLine.boundingMapRect, animated: true)
     }
     
@@ -162,9 +188,43 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         return renderer
     }
     
+    func mapView(_ mapView: MKMapView, didAdd views: [MKAnnotationView]) {
+        if views.last?.annotation is MKUserLocation {
+            addHeadingView(toAnnotationView: views.last!)
+        }
+    }
+    
+    func addHeadingView(toAnnotationView annotationView: MKAnnotationView) {
+        if headingImageView == nil {
+            let image = UIImage(named: "heading")
+            headingImageView = UIImageView(image: image)
+            headingImageView!.frame = CGRect(x: (annotationView.frame.size.width - image!.size.width)/2, y: (annotationView.frame.size.height - image!.size.height)/2, width: image!.size.width, height: image!.size.height)
+            annotationView.insertSubview(headingImageView!, at: 0)
+            headingImageView!.isHidden = true
+        }
+    }
+    
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.last, followUser {
             mapView.setCenter(location.coordinate, animated: true)
+        }
+        if gpxTrackingStatus == .recording {
+            print("\(locations.last?.coordinate.latitude ?? 0) \(locations.last?.coordinate.longitude ?? 0)")
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        if newHeading.headingAccuracy < 0 { return }
+        updateHeadingRotation()
+    }
+    
+    func updateHeadingRotation() {
+        if let heading = locationManager.heading?.trueHeading,
+        let headingImageView = headingImageView {
+            
+            headingImageView.isHidden = false
+            let rotation = CGFloat(heading/180 * Double.pi)
+            headingImageView.transform = CGAffineTransform(rotationAngle: rotation)
         }
     }
     
@@ -191,7 +251,23 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     /// Botón "REC" / "PAUSE" / "RESUME" pulsado
     ///
     @objc func trackerButtonTapped() {
-        print("Record Track")
+        switch gpxTrackingStatus {
+        case .stoped:
+            gpxTrackingStatus = .recording
+        case .recording:
+            gpxTrackingStatus = .paused
+        case .paused:
+            // Preguntar si desea acabar la grabación
+            let alert = UIAlertController(title: "Stop or continue recording?", message: "Stop or continue recording?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Continue", style: .default, handler: { action in
+                self.gpxTrackingStatus = .recording
+            }))
+            alert.addAction(UIAlertAction(title: "Stop", style: .cancel, handler: { action in
+                self.gpxTrackingStatus = .stoped
+            }))
+            self.present(alert, animated: true)
+        }
+        
     }
     
     @objc func openGPXLocal() {
@@ -227,6 +303,20 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     
 }
 
-extension Notification.Name {
-    public static let openFromOutsideNotification = Notification.Name(rawValue: "openExternalFile")
+extension UIButton {
+    open override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        return self.bounds.contains(point) ? self : nil
+    }
+    func blink(enabled: Bool = true, duration: CFTimeInterval = 1.0, stopAfter: CFTimeInterval = 0.0 ) {
+        enabled ? (UIView.animate(withDuration: duration,
+            delay: 0.0,
+            options: [.curveEaseInOut, .autoreverse, .repeat],
+            animations: { [weak self] in self?.alpha = 0.2 },
+            completion: { [weak self] _ in self?.alpha = 1.0 })) : self.layer.removeAllAnimations()
+        if !stopAfter.isEqual(to: 0.0) && enabled {
+            DispatchQueue.main.asyncAfter(deadline: .now() + stopAfter) { [weak self] in
+                self?.layer.removeAllAnimations()
+            }
+        }
+    }
 }

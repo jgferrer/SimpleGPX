@@ -52,3 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 }
+
+extension Notification.Name {
+    public static let openFromOutsideNotification = Notification.Name(rawValue: "openExternalFile")
+}

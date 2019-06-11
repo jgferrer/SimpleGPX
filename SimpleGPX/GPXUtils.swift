@@ -59,4 +59,28 @@ class GPXUtils {
         }
         return coordinateArray
     }
+    
+    func saveGPX(withArray array: [GPXTrackPoint]){
+        let root = GPXRoot(creator: "SimpleGPX")
+        var trackpoints = [GPXTrackPoint]()
+        for point in array {
+            let yourLatitudeHere: CLLocationDegrees = point.latitude!
+            let yourLongitudeHere: CLLocationDegrees = point.longitude!
+            let yourElevationValue: Double = point.elevation!
+            
+            let trackpoint = GPXTrackPoint(latitude: yourLatitudeHere, longitude: yourLongitudeHere)
+            trackpoint.elevation = yourElevationValue
+            trackpoint.time = point.time
+            trackpoints.append(trackpoint)
+        }
+        
+        let track = GPXTrack()
+        let tracksegment = GPXTrackSegment()
+        tracksegment.add(trackpoints: trackpoints)
+        track.add(trackSegment: tracksegment)
+        root.add(track: track)
+        
+        print(root.gpx())
+    }
+    
 }
