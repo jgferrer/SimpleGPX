@@ -216,6 +216,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         if newHeading.headingAccuracy < 0 { return }
         updateHeadingRotation()
+        // Rotar el mapa para apuntar hacia dónde estemos mirando
+        mapView.camera.heading = newHeading.magneticHeading
+        mapView.setCamera(mapView.camera, animated: true)
     }
     
     func updateHeadingRotation() {
