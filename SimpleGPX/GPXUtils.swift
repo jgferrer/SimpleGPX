@@ -66,10 +66,10 @@ class GPXUtils {
         for point in array {
             let yourLatitudeHere: CLLocationDegrees = point.latitude!
             let yourLongitudeHere: CLLocationDegrees = point.longitude!
-            let yourElevationValue: Double = point.elevation!
+            //let yourElevationValue: Double = point.elevation!
             
             let trackpoint = GPXTrackPoint(latitude: yourLatitudeHere, longitude: yourLongitudeHere)
-            trackpoint.elevation = yourElevationValue
+            //trackpoint.elevation = yourElevationValue
             trackpoint.time = point.time
             trackpoints.append(trackpoint)
         }

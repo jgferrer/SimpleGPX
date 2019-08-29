@@ -1,5 +1,5 @@
 PODS:
-  - CoreGPX (0.5.1)
+  - CoreGPX (0.6.6)
 
 DEPENDENCIES:
   - CoreGPX
@@ -9,7 +9,7 @@ SPEC REPOS:
     - CoreGPX
 
 SPEC CHECKSUMS:
-  CoreGPX: bad4d892a6fec4c3ead5b9f0d2bb4dc1a7a0ce4b
+  CoreGPX: 7e35a558f0b5a43f7064e28445f2b7eb71799cfc
 
 PODFILE CHECKSUM: 9704f51c3bae87ca1c8a36ef747a3a1d472e3bf4
 

@@ -10,6 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 import MobileCoreServices
+import CoreGPX
 
 class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
 
@@ -18,6 +19,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     var locationManager: CLLocationManager!
     var headingImageView: UIImageView?
     var userHeading: CLLocationDirection?
+    var autoRotate = false
     
     let kButtonSmallSize: CGFloat = 60.0
     let kButtonLargeSize: CGFloat = 100.0
@@ -40,6 +42,7 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         case recording
         case paused
     }
+    
     var gpxTrackingStatus: GpxTrackingStatus = GpxTrackingStatus.stoped {
         didSet {
             switch gpxTrackingStatus {
@@ -66,11 +69,14 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
     
     let kWhiteBackgroundColor: UIColor = UIColor(red: 254.0/255.0, green: 254.0/255.0, blue: 254.0/255.0, alpha: 0.90)
     
+    var arrayLocations: [GPXTrackPoint]
+    
     // Inicializador
     required init(coder aDecoder: NSCoder) {
         self.openGPXButton = UIButton(coder: aDecoder)!
         self.followUserButton = UIButton(coder: aDecoder)!
         self.trackerButton = UIButton(coder: aDecoder)!
+        self.arrayLocations = []
         super.init(coder: aDecoder)!
         followUser = true
     }
@@ -151,8 +157,21 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         pinchGesture.delegate = self
         mapView.addGestureRecognizer(pinchGesture)
         
+        /* Activar/Desactivar rotación (Compass)
+        let compassButton = MKCompassButton(mapView: mapView)
+        compassButton.compassVisibility = .visible
+        mapView.addSubview(compassButton)
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCompassTap))
+        compassButton.addGestureRecognizer(tapGestureRecognizer)
+        */
     }
 
+    @objc func handleCompassTap() {
+        // Implement your feature when the compass button tapped.
+        autoRotate = !autoRotate
+    }
+    
     @objc func stopFollowingUser(_ gesture: UIPanGestureRecognizer) {
         if self.followUser {
             self.followUser = false
@@ -210,24 +229,33 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
         }
         if gpxTrackingStatus == .recording {
             print("\(locations.last?.coordinate.latitude ?? 0) \(locations.last?.coordinate.longitude ?? 0)")
+            // 29-08-2019 - Añadimos punto al fichero GPX
+            if let latitude = locations.last?.coordinate.latitude {
+                if let longitude = locations.last?.coordinate.longitude {
+                    arrayLocations.append(GPXTrackPoint(latitude: latitude, longitude: longitude))
+                }
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         if newHeading.headingAccuracy < 0 { return }
-        updateHeadingRotation()
-        // Rotar el mapa para apuntar hacia dónde estemos mirando
-        mapView.camera.heading = newHeading.magneticHeading
-        mapView.setCamera(mapView.camera, animated: true)
+        updateHeadingRotation(autoRotate: autoRotate, newHeading: newHeading)
     }
     
-    func updateHeadingRotation() {
+    func updateHeadingRotation(autoRotate: Bool, newHeading: CLHeading) {
         if let heading = locationManager.heading?.trueHeading,
         let headingImageView = headingImageView {
             
             headingImageView.isHidden = false
             let rotation = CGFloat(heading/180 * Double.pi)
             headingImageView.transform = CGAffineTransform(rotationAngle: rotation)
+        }
+        
+        if autoRotate {
+            // Rotar el mapa para apuntar hacia dónde estemos mirando
+            mapView.camera.heading = newHeading.magneticHeading
+            mapView.setCamera(mapView.camera, animated: true)
         }
     }
     
@@ -259,6 +287,11 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
             gpxTrackingStatus = .recording
         case .recording:
             gpxTrackingStatus = .paused
+            // Avisar que estamos en modo pausa
+            // Preguntar si desea acabar la grabación
+            let alert = UIAlertController(title: "Paused", message: "Recording paused", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true)
         case .paused:
             // Preguntar si desea acabar la grabación
             let alert = UIAlertController(title: "Stop or continue recording?", message: "Stop or continue recording?", preferredStyle: .alert)
@@ -267,6 +300,9 @@ class ViewController: UIViewController, MKMapViewDelegate, UIDocumentPickerDeleg
             }))
             alert.addAction(UIAlertAction(title: "Stop", style: .cancel, handler: { action in
                 self.gpxTrackingStatus = .stoped
+                // Guardamos y limpiamos el array
+                GPXUtils.shared.saveGPX(withArray: self.arrayLocations)
+                self.arrayLocations.removeAll()
             }))
             self.present(alert, animated: true)
         }
